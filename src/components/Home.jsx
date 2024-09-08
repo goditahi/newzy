@@ -1,12 +1,8 @@
 /* eslint-disable react/prop-types */
-import  { useEffect, useState } from 'react';
-import { Row, Col, Card, Typography, Button, Skeleton, Badge, Layout } from 'antd';
+import { useEffect, useState } from 'react';
+import { Box, SimpleGrid, Heading, Text, Button, Skeleton, Badge, Image } from '@chakra-ui/react';
 import axios from 'axios';
 import newImg from '../assets/news.jpg';
-import '../components/card.css';
-
-const { Title } = Typography;
-const { Content } = Layout;
 
 const Home = ({ cat }) => {
   const [news, setNews] = useState([]);
@@ -48,70 +44,72 @@ const Home = ({ cat }) => {
 
   if (loading) {
     return (
-      <Content style={{ maxWidth: '1200px', margin: 'auto', padding: '24px' }}>
-        <Title level={2}>
-          Loading <Badge count="News" style={{ backgroundColor: '#f5222d' }} />
-        </Title>
-        <Row gutter={[16, 16]}>
+      <Box maxW="1200px" mx="auto" p="6">
+        <Heading as="h2" size="lg" mb="4">
+          Loading <Badge colorScheme="red">News</Badge>
+        </Heading>
+        <SimpleGrid columns={[1, 2, 3]} spacing="6">
           {Array(6)
             .fill("")
             .map((_, index) => (
-              <Col xs={24} sm={12} lg={8} key={index}>
-                <Card cover={<Skeleton.Image style={{ width: '100%', height: '230px' }} />}>
-                  <Skeleton active paragraph={{ rows: 3 }} />
-                  <Skeleton.Button active style={{ width: '100%', marginTop: '16px' }} />
-                </Card>
-              </Col>
+              <Box key={index} borderRadius="md" overflow="hidden" bg="white">
+                <Skeleton height="230px" />
+                <Box p="4">
+                  <Skeleton height="20px" mb="4" />
+                  <Skeleton height="20px" mb="4" />
+                  <Skeleton height="20px" mb="4" />
+                  <Skeleton height="40px" />
+                </Box>
+              </Box>
             ))}
-        </Row>
-      </Content>
+        </SimpleGrid>
+      </Box>
     );
   }
 
   if (error) {
     return (
-      <Content style={{ maxWidth: '1200px', margin: 'auto', padding: '24px' }}>
-        <Typography.Text type="danger" style={{ whiteSpace: 'pre-line', fontSize: '18px' }}>
+      <Box maxW="1200px" mx="auto" p="6">
+        <Text color="red.500" whiteSpace="pre-line" fontSize="lg">
           {error}
-        </Typography.Text>
-      </Content>
+        </Text>
+      </Box>
     );
   }
 
   return (
-    <Content  style={{ maxWidth: '1200px', margin: 'auto', padding: '24px' }}>
-      <Title level={2}>
-        Trending <Badge count={cat ? `${cat} News` : "News"} style={{ backgroundColor: '#f5222d' }} />
-      </Title>
-      <Row gutter={[16, 16]}>
+    <Box maxW="1200px" mx="auto" p="6">
+      <Heading as="h2" size="lg" mb="4">
+        Trending <Badge colorScheme="red">{cat ? `${cat} News` : "News"}</Badge>
+      </Heading>
+      <SimpleGrid columns={[1, 2, 3]} spacing="6">
         {news.map((item, index) => (
-          <Col xs={24} sm={12} lg={8} key={index}>
-            <Card onClick={() => window.open(item.url, "_blank")}
-              hoverable
-              cover={
-                <div className="card-image-container">
-                  <img alt="example" src={item.thumbnail || newImg} style={{ height: '230px', objectFit: 'cover' }} />
-                  <div className="shine"></div>
-                </div>
-              }
-              actions={[
-                <Button
-                  type="primary"
-                  block
-                  key={index}
-                  onClick={() => window.open(item.url, "_blank")}
-                >
-                  Read More
-                </Button>,
-              ]}
-              bodyStyle={{ position: 'relative' }}
-            >
-              <Card.Meta title={item.title.slice(0, 250) + '...'} />
-            </Card>
-          </Col>
+          <Box key={index} borderRadius="md" overflow="hidden" bg="white">
+            <Image
+              src={item.thumbnail || newImg}
+              alt="news-thumbnail"
+              h="230px"
+              objectFit="cover"
+              w="100%"
+              onClick={() => window.open(item.url, "_blank")}
+              cursor="pointer"
+            />
+            <Box p="4">
+              <Text fontWeight="bold" mb="2">
+                {item.title.slice(0, 250) + '...'}
+              </Text>
+              <Button
+                colorScheme="blue"
+                onClick={() => window.open(item.url, "_blank")}
+                w="100%"
+              >
+                Read More
+              </Button>
+            </Box>
+          </Box>
         ))}
-      </Row>
-    </Content>
+      </SimpleGrid>
+    </Box>
   );
 };
 

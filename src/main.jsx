@@ -5,15 +5,15 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 
-import { ThemeProvider } from "@material-tailwind/react";
+
  
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
 
-    <ThemeProvider>
+   
       <App />
-    </ThemeProvider>
+    
     </ChakraProvider>
   </React.StrictMode>
 );
