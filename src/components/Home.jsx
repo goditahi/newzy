@@ -25,8 +25,8 @@ const Home = ({ cat }) => {
         ...(cat && { topic: cat }),
       },
       headers: {
-        "x-rapidapi-key": "313094cebdmsh623661f1610c97ap1d4513jsn93cd4f3c90dc",
-        "x-rapidapi-host": "google-news22.p.rapidapi.com",
+        "x-rapidapi-key": import.meta.env.VITE_API_KEY,
+        "x-rapidapi-host": import.meta.env.VITE_RAPID_HOST,
       },
     };
 
