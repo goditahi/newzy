@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import  { useEffect, useState } from 'react';
 import { Row, Col, Card, Typography, Button, Skeleton, Badge, Layout } from 'antd';
 import axios from 'axios';
 import newImg from '../assets/news.jpg';
+import '../components/card.css';
 
 const { Title } = Typography;
 const { Content } = Layout;
@@ -32,12 +32,10 @@ const Home = ({ cat }) => {
 
     try {
       const response = await axios.request(options);
-      console.log(response.data.data);
       const articles = response.data.data;
       setNews(articles);
     } catch (error) {
       setError(`Failed to fetch the ${cat} news\n${error}`);
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -90,7 +88,12 @@ const Home = ({ cat }) => {
           <Col xs={24} sm={12} lg={8} key={index}>
             <Card
               hoverable
-              cover={<img alt="example" src={item.thumbnail || newImg} style={{ height: '230px', objectFit: 'cover' }} />}
+              cover={
+                <div className="card-image-container">
+                  <img alt="example" src={item.thumbnail || newImg} style={{ height: '230px', objectFit: 'cover' }} />
+                  <div className="shine"></div>
+                </div>
+              }
               actions={[
                 <Button
                   type="primary"
@@ -101,6 +104,7 @@ const Home = ({ cat }) => {
                   Read More
                 </Button>,
               ]}
+              bodyStyle={{ position: 'relative' }}
             >
               <Card.Meta title={item.title.slice(0, 250) + '...'} />
             </Card>
