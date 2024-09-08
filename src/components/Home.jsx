@@ -79,14 +79,14 @@ const Home = ({ cat }) => {
   }
 
   return (
-    <Content style={{ maxWidth: '1200px', margin: 'auto', padding: '24px' }}>
+    <Content  style={{ maxWidth: '1200px', margin: 'auto', padding: '24px' }}>
       <Title level={2}>
         Trending <Badge count={cat ? `${cat} News` : "News"} style={{ backgroundColor: '#f5222d' }} />
       </Title>
       <Row gutter={[16, 16]}>
         {news.map((item, index) => (
           <Col xs={24} sm={12} lg={8} key={index}>
-            <Card
+            <Card onClick={() => window.open(item.url, "_blank")}
               hoverable
               cover={
                 <div className="card-image-container">
